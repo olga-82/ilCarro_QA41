@@ -18,7 +18,7 @@ public class BasePage {
         menuItem.click();
 
         switch (topMenuItem) {
-            case SEARCH:
+            case SEARCH, DELETE_ACCOUNT, LOGOUT:
                 return (T) new SearchPage(driver);
             case TERMS_OF_USE:
                 return (T) new TermsOfUsePage(driver);
@@ -28,6 +28,8 @@ public class BasePage {
                 return (T) new SignUpPage(driver);
             case LET_THE_CAR_WORK:
                 return (T) new LetTheCarWorkPage(driver);
+
+
             default:
                 throw new IllegalArgumentException("Something's wrong " + topMenuItem);
         }

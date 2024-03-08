@@ -24,7 +24,7 @@ public class BaseTest {
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--lang=en");
-           // options.addArguments("--disable-gpu");
+            options.addArguments("--disable-gpu");
             driver = new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
