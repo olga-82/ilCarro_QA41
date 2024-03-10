@@ -29,7 +29,7 @@ public class TestClass extends BaseTest {
         Thread.sleep(3000);
     }
     @Test
-    @Description("Registration Positive")
+    @Description("Test Positive")
     public void test002() throws InterruptedException {
         int i = (int) (System.currentTimeMillis() / 1000) % 3600;
         Allure.description("Registration Positive");
