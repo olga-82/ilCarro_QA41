@@ -18,29 +18,20 @@ public class TestClass extends BaseTest {
 
     @Test
     public void test001() throws InterruptedException {
-        int i = (int) (System.currentTimeMillis() / 1000) % 3600;
         HomePage hp = new HomePage(getDriver());
         LogInPage logInPage = hp.openTopMenu(TopMenuItem.LOGIN);
         logInPage.tryToFindAnElement();
         LetTheCarWorkPage lcwp = logInPage.openTopMenu(TopMenuItem.LET_THE_CAR_WORK);
-        lcwp.addLocation("New York").setManufacturer("Mercedes")
-                .fillModelField("Vito").setFuelType().
-                fillYearField("2015").fillSeatsField("4").
-                fillCarClassField("B").fillCarRegNumberField("110-120-"+i)
-                .fillCarPriceField("100").fillAboutField("test")
-                .photoAttachment("/Users/olgakolchina/Downloads/1707474857096-22222222.jpg")
-                .clickButtonSubmit();
-        Thread.sleep(5000);
-        Assert.assertTrue(lcwp.isCarAddedSuccess());
-        lcwp.clickButtonAddCar();
+        lcwp.setManufacturer("BMW").addLocation("Montana")
+                .setFuelType().photoAttachment("/Users/olgakolchina/Downloads/1707474857096-22222222.jpg");
 
 
         Thread.sleep(3000);
     }
-
     @Test
     @Description("Registration Positive")
     public void test002() throws InterruptedException {
+        int i = (int) (System.currentTimeMillis() / 1000) % 3600;
         Allure.description("Registration Positive");
         BasePage bp = new HomePage(getDriver());
         User user = new User(NameAndLastNameGenerator.generateName(),
@@ -61,22 +52,50 @@ public class TestClass extends BaseTest {
         signUpPage.clickButtonOk();
         TakeScreen.takeScreenshot("screen");
         BasePage.openTopMenu(TopMenuItem.LOGOUT);
-        LogInPage loginPage = bp.openTopMenu(TopMenuItem.LOGIN);
+        Allure.description("Login Success");
+        Allure.step("Navigate to Logout Page");
+        LogInPage loginPage = signUpPage.openTopMenu(TopMenuItem.LOGIN);
         Assert.assertTrue(loginPage.isTextExist());
         Thread.sleep(3000);
+        Allure.step("Fill Login form");
         loginPage.fillFormLogin();
+        Allure.step("click by login button");
         loginPage.clickLoginButton();
         Thread.sleep(3000);
         Assert.assertTrue(loginPage.isTextLoginSuccess());
         loginPage.clickButtonOk();
+        Allure.description("Login Success");
         Thread.sleep(5000);
         TakeScreen.takeScreenshot("screen");
-        SearchPage searchPage = bp.openTopMenu(TopMenuItem.SEARCH);
+        Allure.description("Serch car Success");
+        Allure.step("Navigate to Serch Page");
+        SearchPage searchPage = loginPage.openTopMenu(TopMenuItem.SEARCH);
         searchPage.textSearchExists();
+        Allure.step("Fill search form");
         searchPage.fillFormSearch("Tel Aviv", "3/14/2024", "3/22/2024");
-        TakeScreen.takeScreenshot("screen");
-        Thread.sleep(7000);
+        Thread.sleep(5000);
         Assert.assertTrue(searchPage.isCarPresent());
+        Allure.description("Search car Success");
+        TakeScreen.takeScreenshot("screen");
+        Allure.description("Add new car Success");
+        Allure.step("Navigate to Let the car work Page");
+        LetTheCarWorkPage lcwp = searchPage.openTopMenu(TopMenuItem.LET_THE_CAR_WORK);
+        Allure.step("Fill Add new car Form");
+        lcwp.addLocation("Tel Aviv").setManufacturer("Mercedes")
+                .fillModelField("Vito").setFuelType().
+                fillYearField("2015").fillSeatsField("4").
+                fillCarClassField("B").fillCarRegNumberField("110-120-"+i)
+                .fillCarPriceField("100").fillAboutField("test")
+                .photoAttachment("/Users/olgakolchina/Downloads/1707474857096-22222222.jpg")
+                .clickButtonSubmit();
+        Thread.sleep(2000);
+        Assert.assertTrue(lcwp.isCarAddedSuccess());
+        lcwp.clickButtonAddCar();
+        Allure.description("Car added successfully");
+        Thread.sleep(5000);
+        Allure.step("Navigate to Home Page");
+        lcwp.openTopMenu(TopMenuItem.LOGOUT);
+        Thread.sleep(5000);
         TakeScreen.takeScreenshot("screen");
     }
 
