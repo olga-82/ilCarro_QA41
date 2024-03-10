@@ -13,7 +13,8 @@ import java.time.Duration;
 
 public class BaseTest {
 
-    private WebDriver driver;
+    private static WebDriver driver;
+
 
     @BeforeMethod
     @Parameters("browser")
@@ -47,7 +48,7 @@ public class BaseTest {
         }
     }
 
-    public WebDriver getDriver() {
+    public static WebDriver getDriver() {
         return driver;
     }
 }
